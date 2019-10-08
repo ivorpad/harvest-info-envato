@@ -28,16 +28,13 @@ export default function ReportInner({ data, monthSelected }) {
       {!data.isLoading ? (
         <>
           <p>
-            The number of hours to work this month is {workingDays * 8} hrs.
+            The number of hours to work this month is <b>{workingDays * 8} hours</b> .
           </p>
 
           <p>
             The number of hours that you have worked this month is{" "}
             <b>
-              {hoursWorkedCurrentMonth === 0
-                ? "loading..."
-                : parseFloat(hoursWorkedCurrentMonth).toFixed(2)}{" "}
-              hrs.
+              {parseFloat(hoursWorkedCurrentMonth).toFixed(2)} hours.
             </b>
           </p>
 
@@ -52,22 +49,12 @@ export default function ReportInner({ data, monthSelected }) {
               <>
                 <p>
                   You need to work{" "}
-                  {hoursWorkedCurrentMonth === 0
-                    ? "loading..."
-                    : parseFloat(
-                      workingDays * 8 - hoursWorkedCurrentMonth
-                    ).toFixed(2)}{" "}
-                  hours to finish this month
+                  <b>{parseFloat(workingDays * 8 - hoursWorkedCurrentMonth).toFixed(2)} hours</b> to finish this month
               </p>
 
                 <p>
                   If you keep this pace you will need to work{" "}
-                  {hoursWorkedCurrentMonth === 0
-                    ? "loading..."
-                    : parseFloat(
-                      (workingDays * 8 - hoursWorkedCurrentMonth) / restOfDays
-                    ).toFixed(2)}
-                  hrs daily to set your goal.
+                  <b> {parseFloat((workingDays * 8 - hoursWorkedCurrentMonth) / restOfDays).toFixed(2)} hours</b> daily to set your goal.
               </p>
               </>
             )}
