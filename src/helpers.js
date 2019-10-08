@@ -24,7 +24,13 @@ const getDays = (month = "") => {
     weekdays: [1, 2, 3, 4, 5]
   });
 
-  return { firstDay, lastDay, workingDays, restOfDays }
+  const isFuture = (month) => {
+    const today = moment().format('YYYY-MM-DD');
+    const nextMonth = moment().month(month).startOf("month").format('YYYY-MM-DD')
+    return moment(today).isBefore(nextMonth)
+  }
+
+  return { firstDay, lastDay, workingDays, restOfDays, isFuture }
 }
 
 export default getDays;

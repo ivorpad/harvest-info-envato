@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { AppContext } from "./App";
+import ReportInner from './ReportInner'
 import moment from "moment";
 import { isoWeekdayCalc } from "moment-weekday-calc";
 import getDays from "./helpers";
@@ -60,87 +61,13 @@ export class Report extends Component {
     return (
       <AppContext.Consumer>
         {value => {
-          const firstDay = getDays(value.monthSelected).firstDay;
-          const lastDay = getDays(value.monthSelected).lastDay;
-
-          const workingDays = moment().isoWeekdayCalc({
-            rangeStart: firstDay,
-            rangeEnd: lastDay,
-            weekdays: [1, 2, 3, 4, 5]
-          });
-
-          const restOfDays = getDays().restOfDays;
-
-          const hoursWorkedCurrentMonth = this.state.time_entries.reduce(
-            (acc, { hours }) => {
-              return hours + acc;
-            },
-            0
-          );
-
           return (
             <>
               <h3>{capitalize(value.monthSelected)} Report</h3>
-              {!this.state.isLoading ? (
-                <>
-                  <p>
-                    The number of hours to work this month is {workingDays * 8}{" "}
-                    hrs.
-                  </p>
-
-                  <p>
-                    The number of hours that you have worked this month is{" "}
-                    <b>
-                      {hoursWorkedCurrentMonth === 0
-                        ? "loading..."
-                        : parseFloat(hoursWorkedCurrentMonth).toFixed(2)}{" "}
-                      hrs.
-                    </b>
-                  </p>
-
-                  {hoursWorkedCurrentMonth > workingDays * 8 ? (
-                    <h2>
-                      Congratulations{" "}
-                      <span role="img" aria-label="party">
-                        🎉
-                      </span>
-                    </h2>
-                  ) : (
-                      <>
-                        <p>
-                          You need to work{" "}
-                          {hoursWorkedCurrentMonth === 0
-                            ? "loading..."
-                            : parseFloat(
-                              workingDays * 8 - hoursWorkedCurrentMonth
-                            ).toFixed(2)}{" "}
-                          hours to finish this month
-                      </p>
-
-                        <p>
-                          If you keep this pace you will need to work{" "}
-                          {hoursWorkedCurrentMonth === 0
-                            ? "loading..."
-                            : parseFloat(
-                              (workingDays * 8 - hoursWorkedCurrentMonth) /
-                              restOfDays
-                            ).toFixed(2)}
-                          hrs daily to set your goal.
-                      </p>
-                      </>
-                    )}
-
-                  <h2>
-                    Earnings:{" "}
-                    {hoursWorkedCurrentMonth === 0
-                      ? "counting cash..."
-                      : "$" +
-                      parseFloat(hoursWorkedCurrentMonth).toFixed(2) * 32}
-                  </h2>
-                </>
-              ) : (
-                  "Loading..."
-                )}
+              {!getDays().isFuture(value.monthSelected) ? <ReportInner
+                data={this.state}
+                monthSelected={value.monthSelected}
+              /> : <h3>Hold on there, cowboy <span role="img" aria-label="cowboy">🤠</span>! You can't select a date in the future</h3>}
             </>
           );
         }}

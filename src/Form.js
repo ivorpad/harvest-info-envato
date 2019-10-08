@@ -1,15 +1,29 @@
 import React, { Component, createContext } from 'react'
 import { AppContext } from './App'
+
 export const FormContext = createContext()
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+const months = [
+  'January', 
+  'February', 
+  'March', 
+  'April', 
+  'May', 
+  'June', 
+  'July', 
+  'August', 
+  'September', 
+  'October', 
+  'November', 
+  'December'
+]
 
 export class Form extends Component {
 
   render() {
-
+    
     return (
       <AppContext.Consumer>
-
         {(value) => (
           <>
             <h2>Select month:</h2>
