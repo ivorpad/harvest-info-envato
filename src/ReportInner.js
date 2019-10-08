@@ -63,7 +63,7 @@ export default function ReportInner({ data, monthSelected }) {
             Earnings:{" "}
             {hoursWorkedCurrentMonth === 0
               ? "counting cash..."
-              : "$" + parseFloat(hoursWorkedCurrentMonth).toFixed(2) * process.env.REACT_APP_ENVATO_PAYENT_RATE}
+              : "$" + parseFloat(hoursWorkedCurrentMonth).toFixed(2) * process.env.REACT_APP_ENVATO_PAYMENT_RATE}
           </h2>
         </>
       ) : (
